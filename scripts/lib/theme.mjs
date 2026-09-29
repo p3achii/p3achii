@@ -62,7 +62,7 @@ export function peachBlink() {
   return p;
 }
 
-// Small peach for otters to hold.
+// Small peach icon (tagline bullet, record label).
 export function tinyPeach() {
   const p = new Pixels(9, 9);
   peachAt(p, 4.5, 5, 3.3);
@@ -73,75 +73,75 @@ export function tinyPeach() {
 }
 
 // ---------------------------------------------------------------------------
-// Sea otter floating on its back, hugging a peach (head on the right).
-export function otterFloat() {
-  const p = new Pixels(34, 16);
-  const o = 1; // outline margin
-  p.ellipse(o + 3.4, 11.4, 3.4, 1.5, T.fur); // tail
-  p.ellipse(o + 6.2, 5.8, 1.7, 2.3, T.fur); // back feet up in the air
-  p.ellipse(o + 9.4, 5.2, 1.7, 2.5, T.fur);
-  p.dots(T.furDark, [o + 6, 4], [o + 9, 3], [o + 9, 4]);
-  p.ellipse(o + 14, 10, 9.6, 3.9, T.fur); // body
-  p.ellipse(o + 14.6, 8.6, 7.6, 2.4, T.latte); // belly
-  p.ellipse(o + 25.6, 7.6, 5.3, 4.9, T.fur); // head
-  p.ellipse(o + 26.8, 8.5, 3.8, 3.4, T.face); // pale face
-  p.ellipse(o + 22.3, 3.9, 1.4, 1.3, T.fur); // ear
-  p.dots(T.ink, [o + 25, 7], [o + 25, 8], [o + 28, 7], [o + 28, 8]); // eyes
-  p.dots(T.ink, [o + 26, 9], [o + 27, 9]); // nose
-  p.dots(T.furDark, [o + 26, 10], [o + 27, 10]);
-  p.dots(T.blush, [o + 24, 9], [o + 29, 9]);
-  // peach held on the belly, one paw each side
-  peachAt(p, o + 17.6, 4.9, 2.5);
-  p.dots(T.foam, [o + 16, 4]);
-  p.dots(P.brown, [o + 17, 2]);
-  p.dots(P.teal, [o + 18, 1], [o + 19, 1], [o + 18, 2]);
-  p.ellipse(o + 14.6, 6.4, 1.3, 1.1, T.fur);
-  p.ellipse(o + 20.6, 6.4, 1.3, 1.1, T.fur);
-  return p.outline(P.dark);
-}
+// Rakko (Chiikawa) fan-art: round cream fluffball with a star scar, sleepy eyes,
+// white scarf + cape and a sword hilt over the shoulder.
+const R = {
+  body: '#FEF3E0',
+  shade: '#F3E0C6',
+  fluff: '#D9B893',
+  ink: '#2B211B',
+  cloth: '#FFFFFF',
+  clothShade: '#E7E0D9',
+  star: '#D9BE97',
+  blush: '#F8C3CC',
+  hilt: '#7A7370',
+};
 
-export function otterFloatBlink() {
-  const o = 1;
-  const p = new Pixels(34, 16);
-  p.dots(T.face, [o + 25, 7], [o + 28, 7]);
-  p.dots(T.ink, [o + 24, 8], [o + 25, 8], [o + 28, 8], [o + 29, 8]);
+export function rakko() {
+  const p = new Pixels(30, 30);
+  const [cx, cy, r] = [15, 14.5, 10.8];
+
+  // behind the body: sword hilt, ears, feet and the cape's flared edges
+  p.stamp(0, 13, ['KK.....', 'KGK....', 'KGGK...', '.KGGK..', '..KGGK.'], { K: R.ink, G: R.hilt }); // sword hilt
+  p.ellipse(4.3, 11.5, 1.8, 1.8, R.ink);
+  p.ellipse(25.7, 11.5, 1.8, 1.8, R.ink);
+  p.ellipse(11.4, 25, 1.7, 1.25, R.ink);
+  p.ellipse(18.6, 25, 1.7, 1.25, R.ink);
+  for (let y = 19; y <= 25; y++) {
+    for (let x = 4 - Math.floor((y - 19) / 2); x <= 9; x++) {
+      const c = x === 9 || y === 25 ? R.clothShade : R.cloth;
+      p.set(x, y, c);
+      p.set(29 - x, y, c);
+    }
+  }
+  p.ellipse(cx, cy, r, r, R.body);
+  p.crescent(cx, cy, r, r, -1.4, -1.4, R.shade);
+
+  // scarf across the chest, a pixel wider than the body
+  for (let y = 16; y <= 19; y++) {
+    let xl = 0;
+    while (![R.body, R.shade].includes(p.get(xl, y))) xl++;
+    for (let x = xl - 1; x <= 30 - xl; x++) p.set(x, y, y === 16 || y === 19 ? R.ink : y === 18 ? R.clothShade : R.cloth);
+  }
+  p.ellipse(6, 21, 1.3, 1.3, R.ink); // little black arms
+  p.ellipse(24, 21, 1.3, 1.3, R.ink);
+
+  // face
+  p.stamp(5, 5, ['..K..', '..S..', 'KSSSK', '..S..', '..K..'], { K: R.ink, S: R.star }); // star scar
+  p.stamp(9, 11, ['KWWK', '.KK.'], { K: R.ink, W: R.cloth }); // sleepy eyes
+  p.stamp(17, 11, ['KWWK', '.KK.'], { K: R.ink, W: R.cloth });
+  p.dots(R.ink, [12, 9], [17, 9]); // serious little brows
+  p.rect(6, 13, 3, 2, R.blush);
+  p.rect(21, 13, 3, 2, R.blush);
+  p.dots(R.ink, [14, 13], [15, 13], [13, 14], [16, 14], [14, 15], [15, 15]); // nose + open mouth
+  p.dots(R.blush, [14, 14], [15, 14]);
+
+  const before = p.clone();
+  p.outline(R.ink);
+  // fluffy edge: every other short arc of the body's outline is drawn soft instead of dark
+  p.each((x, y) => {
+    if (before.get(x, y) || p.get(x, y) !== R.ink) return;
+    const touchesBody = [[1, 0], [-1, 0], [0, 1], [0, -1]].some(([dx, dy]) => [R.body, R.shade].includes(p.get(x + dx, y + dy)));
+    const arc = Math.floor((Math.atan2(y + 0.5 - cy, x + 0.5 - cx) + Math.PI) / (Math.PI / 12));
+    if (touchesBody && arc % 2) p.set(x, y, R.fluff);
+  });
   return p;
 }
 
-// ---------------------------------------------------------------------------
-// Rakko-style sea otter sitting up, holding a peach.
-export function otterSit() {
-  const p = new Pixels(26, 28);
-  p.ellipse(20.2, 23.6, 3.4, 1.5, T.fur); // tail
-  p.ellipse(3.9, 9.6, 1.4, 1.4, T.fur); // little side ears
-  p.ellipse(21.1, 9.6, 1.4, 1.4, T.fur);
-  p.ellipse(12.5, 20.4, 7, 5.6, T.fur); // body
-  p.ellipse(12.5, 21, 4.6, 4, T.latte); // belly
-  p.ellipse(12.5, 10.6, 9, 7, T.fur); // head
-  p.ellipse(12.5, 11.8, 6.8, 5.2, T.face); // pale face
-  p.ellipse(12.5, 13.6, 3.4, 2.2, T.foam); // muzzle
-  p.dots(T.ink, [8, 10], [8, 11], [9, 10], [9, 11], [16, 10], [16, 11], [17, 10], [17, 11]); // eyes
-  p.dots(T.foam, [8, 10], [16, 10]);
-  p.dots(T.ink, [12, 12], [13, 12], [12, 13], [13, 13]); // nose
-  p.dots(T.furDark, [11, 14], [14, 14]); // mouth
-  p.dots(T.sandDeep, [10, 13], [15, 13]); // whisker dots
-  p.dots(T.blush, [6, 13], [7, 13], [18, 13], [19, 13]);
-  // peach hugged at the chest
-  peachAt(p, 12.5, 20.4, 2.7);
-  p.dots(T.foam, [11, 19]);
-  p.dots(P.brown, [12, 17]);
-  p.dots(P.teal, [13, 16], [14, 16], [13, 17]);
-  p.ellipse(9.1, 20.6, 1.5, 1.3, T.fur); // paws
-  p.ellipse(15.9, 20.6, 1.5, 1.3, T.fur);
-  p.ellipse(9.6, 25.6, 2.2, 1.2, T.furDark); // feet
-  p.ellipse(15.4, 25.6, 2.2, 1.2, T.furDark);
-  return p.outline(P.dark);
-}
-
-export function otterSitBlink() {
-  const p = new Pixels(26, 28);
-  p.dots(T.face, [8, 10], [9, 10], [16, 10], [17, 10]);
-  p.dots(T.ink, [8, 11], [9, 11], [16, 11], [17, 11]);
+export function rakkoBlink() {
+  const p = new Pixels(30, 30);
+  p.rect(9, 11, 4, 1, R.body).rect(17, 11, 4, 1, R.body);
+  p.rect(9, 12, 4, 1, R.ink).rect(17, 12, 4, 1, R.ink);
   return p;
 }
 

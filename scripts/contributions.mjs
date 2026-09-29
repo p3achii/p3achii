@@ -9,7 +9,7 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { pixelLabel, round } from './lib/pixel.mjs';
 import { DOTS, doc, drift, esc, panel, sparkle, tab, wave } from './lib/svg.mjs';
-import { P, T, iconCake, otterFloat, otterFloatBlink } from './lib/theme.mjs';
+import { P, T, iconCake, peach, peachBlink } from './lib/theme.mjs';
 
 const BIRTHDAY = { month: 6, day: 3 };
 const TIMEZONE = process.env.TIMEZONE || 'Asia/Bangkok'; // used for "today" and the birthday countdown
@@ -213,8 +213,8 @@ ${isBday ? `<g class="${birthdayMode ? 'party' : 'wiggle'}">${iconCake().svg(bx 
 </g>`;
   }).join('');
 
-  // the otter paddling along the surface above the calendar
-  const otter = `<g class="swim"><g transform="translate(0 58)"><g class="bob">${otterFloat().svg(0, 0, 3)}<g class="blink">${otterFloatBlink().svg(0, 0, 3)}</g></g></g></g>`;
+  // a peach bobbing along the surface above the calendar
+  const floater = `<g class="swim"><g transform="translate(0 64)"><g class="bob">${peach().svg(0, 0, 2)}<g class="blink">${peachBlink().svg(0, 0, 2)}</g></g></g></g>`;
 
   // birthday confetti
   let confetti = '';
@@ -259,7 +259,7 @@ ${tab(30, 4, birthdayMode ? 'BIRTHDAY TIDE ♥' : 'TIDE LOG')}
 <text class="mono" x="858" y="50" font-size="12" fill="${P.brown}" text-anchor="end">@${esc(login)} · contributions, last 12 months</text>
 <g clip-path="url(#inner)">
   <g>${drift(60, 7)}<path d="${wave(100, 3, 60, { bottom: 116 })}" fill="${T.sky}"/></g>
-  ${otter}
+  ${floater}
   <g>${drift(80, 5, 1)}<path d="${wave(106, 3, 80, { bottom: 116 })}" fill="${T.mist}"/></g>
 </g>
 ${months}
@@ -273,7 +273,7 @@ ${confetti}`;
   const bdayText = birthdayMode ? "it's my birthday today" : `${untilBirthday} ${plural(untilBirthday, 'day')} until my birthday`;
   return doc(W, H, {
     title: `${login} — contribution tide log`,
-    desc: `${calendar.totalContributions} contributions in the last year across ${s.active} active days. Current streak ${s.current} ${plural(s.current, 'day')}, longest ${s.longest.len}. ${bdayText}. A sea otter paddles over the calendar while the squares roll like waves.`,
+    desc: `${calendar.totalContributions} contributions in the last year across ${s.active} active days. Current streak ${s.current} ${plural(s.current, 'day')}, longest ${s.longest.len}. ${bdayText}. A peach bobs along the water above the calendar while the squares roll like waves.`,
     style, defs, body,
   });
 }

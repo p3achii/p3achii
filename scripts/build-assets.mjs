@@ -6,8 +6,7 @@ import { DOTS, cloud, cycle, doc, drift, esc, heart, panel, sparkle, tab, wave }
 import {
   P, T,
   iconCake, iconCube, iconLive2D, iconPalette,
-  otterFloat, otterFloatBlink, otterSit, otterSitBlink,
-  peach, peachBlink, tinyPeach, wooper, wooperBlink,
+  peach, peachBlink, rakko, rakkoBlink, tinyPeach, wooper, wooperBlink,
 } from './lib/theme.mjs';
 
 const PROFILE = {
@@ -35,7 +34,7 @@ const PROFILE = {
   ],
   party: [
     { sprite: 'wooper', name: 'WOOPER', tag: 'No.194', about: 'fav pokémon', chips: [['WATER', P.blue], ['GROUND', P.brown]] },
-    { sprite: 'otter', name: 'RAKKO', tag: '🦦', about: 'fav chiikawa character', chips: [['SEA OTTER', P.teal], ['CHIIKAWA', T.peachShade]] },
+    { sprite: 'rakko', name: 'RAKKO', tag: '🦦', about: 'fav chiikawa character', chips: [['SEA OTTER', P.teal], ['CHIIKAWA', T.peachShade]] },
   ],
   playlist: ['Landokmai', 'dept', 'Tattoo Colour', 'Laufey'],
 };
@@ -112,12 +111,12 @@ function header() {
   const glintsMid = glint([[712, 244, 36], [750, 250, 22], [700, 252, 16], [770, 246, 26]], T.foam);
   const glintsFront = glint([[726, 274, 30], [764, 282, 18], [704, 286, 14]], T.sky);
 
-  const otter = `<g transform="translate(560 196)">
+  const floater = `<g transform="translate(606 198)">
   <g class="bob">
-    <ellipse class="ripple" cx="68" cy="58" rx="70" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
-    <ellipse class="ripple" style="animation-delay:-1.4s" cx="68" cy="58" rx="70" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
-    ${otterFloat().svg(0, 0, 4)}
-    <g class="blink">${otterFloatBlink().svg(0, 0, 4)}</g>
+    <ellipse class="ripple" cx="60" cy="60" rx="66" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
+    <ellipse class="ripple" style="animation-delay:-1.4s" cx="60" cy="60" rx="66" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
+    ${wooper().svg(0, 0, 4)}
+    <g class="blink">${wooperBlink().svg(0, 0, 4)}</g>
   </g>
 </g>`;
 
@@ -168,7 +167,7 @@ ${typing.defs}`;
   <g>${drift(120, 9)}<path d="${wave(226, 6, 120)}" fill="${T.mist}"/></g>
   <g>${drift(160, 12, 1)}<path d="${wave(242, 7, 160)}" fill="${P.blue}"/><path d="${wave(242, 7, 160, { open: true })}" fill="none" stroke="${T.sky}" stroke-width="2.5" opacity=".7"/></g>
   ${glintsMid}
-  ${otter}
+  ${floater}
   <g>${drift(190, 8)}<path d="${wave(264, 8, 190)}" fill="${P.teal}"/><path d="${wave(264, 8, 190, { open: true })}" fill="none" stroke="${T.mist}" stroke-width="3" opacity=".8"/></g>
   ${glintsFront}
   ${bubbles}
@@ -177,7 +176,7 @@ ${typing.defs}`;
 
   return doc(W, H, {
     title: `${PROFILE.name} — drawing & game dev`,
-    desc: `Animated seaside banner: the name ${PROFILE.name} bobbing in pixel letters, a sea otter floating on the waves hugging a peach, and a typewriter cycling through: ${PROFILE.taglines.join(' / ')}`,
+    desc: `Animated seaside banner: the name ${PROFILE.name} bobbing in pixel letters, Wooper floating in the waves in front of the setting sun, and a typewriter cycling through: ${PROFILE.taglines.join(' / ')}`,
     style, defs, body,
   });
 }
@@ -294,10 +293,10 @@ function party() {
   let members = '';
   PROFILE.party.forEach((m, i) => {
     const y = 64 + i * 142;
-    const foot = m.sprite === 'wooper' ? 104 : 110;
+    const foot = m.sprite === 'wooper' ? 104 : 106;
     const sprite = m.sprite === 'wooper'
       ? `<g transform="translate(22 ${y + 12})"><g class="idle" style="animation-delay:${-i * 0.6}s">${wooper().svg(0, 0, 4)}<g class="blink">${wooperBlink().svg(0, 0, 4)}</g></g></g>`
-      : `<g transform="translate(32 ${y + 2})"><g class="idle" style="animation-delay:${-i * 0.6}s">${otterSit().svg(0, 0, 4)}<g class="blink" style="animation-delay:-2s">${otterSitBlink().svg(0, 0, 4)}</g></g></g>`;
+      : `<g transform="translate(24 ${y})"><g class="idle" style="animation-delay:${-i * 0.6}s">${rakko().svg(0, 0, 4)}<g class="blink" style="animation-delay:-2s">${rakkoBlink().svg(0, 0, 4)}</g></g></g>`;
     const hearts = [0, 1, 2].map((k) => `<g class="float" style="animation-delay:${round(-k * 1.3 - i * 0.7)}s">${heart().svg(118 + k * 10, y + 30 - k * 6, 2)}</g>`).join('');
     let cx = 176;
     const chips = m.chips.map(([label, color]) => {
@@ -436,6 +435,8 @@ function footer() {
 @keyframes swim { from { transform: translateX(-180px); } to { transform: translateX(${W + 40}px); } }
 .bob { animation: bob 2.6s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 @keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(5px) rotate(2deg); } }
+.blink { opacity: 0; animation: blink 4s infinite; }
+@keyframes blink { 0%, 90%, 96%, 100% { opacity: 0; } 91%, 95% { opacity: 1; } }
 .beat { animation: beat 1.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
 @keyframes beat { 0%, 100% { transform: scale(1); } 15% { transform: scale(1.25); } 30% { transform: scale(1); } }`;
   const title = pixelLabel('THANKS FOR SWIMMING BY', { x: W / 2 - 12, y: 30, size: 3, fill: P.dark, anchor: 'middle' });
@@ -449,14 +450,14 @@ function footer() {
   <g class="beat">${heart(T.peachShade).svg(W / 2 - 12 + title.width / 2 + 14, 32, 3)}</g>
   <text class="mono" x="${W / 2}" y="78" font-size="16" fill="${P.brown}" text-anchor="middle">see you at sea ~</text>
   <g>${drift(120, 10, 1)}<path d="${wave(112, 6, 120, { bottom: 200 })}" fill="${T.mist}"/></g>
-  <g class="swim"><g class="bob">${otterFloat().svg(0, 88, 3)}</g></g>
   <g>${drift(160, 7)}<path d="${wave(130, 7, 160, { bottom: 200 })}" fill="${P.blue}"/></g>
+  <g class="swim"><g transform="translate(0 100)"><g class="bob">${rakko().svg(0, 0, 2)}<g class="blink">${rakkoBlink().svg(0, 0, 2)}</g></g></g></g>
   <g>${drift(200, 9)}<path d="${wave(146, 6, 200, { bottom: 200 })}" fill="${P.teal}"/></g>
 </g>
 <rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="20" fill="none" stroke="${P.dark}" stroke-width="3"/>`;
   return doc(W, H, {
     title: 'thanks for swimming by',
-    desc: 'Footer: "thanks for swimming by — see you at sea" above rolling waves, with a sea otter drifting past.',
+    desc: 'Footer: "thanks for swimming by — see you at sea" above rolling waves, with Rakko floating past.',
     style, defs: DOTS, body,
   });
 }
