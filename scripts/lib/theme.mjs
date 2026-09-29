@@ -73,7 +73,7 @@ export function tinyPeach() {
 }
 
 // ---------------------------------------------------------------------------
-// Rakko (Chiikawa) fan-art: round cream fluffball with a star scar, sleepy eyes,
+// Rakko (Chiikawa) fan-art: round cream fluffball with a star scar, big open eyes,
 // white scarf + cape and a sword hilt over the shoulder.
 const R = {
   body: '#FEF3E0',
@@ -118,9 +118,9 @@ export function rakko() {
 
   // face
   p.stamp(5, 5, ['..K..', '..S..', 'KSSSK', '..S..', '..K..'], { K: R.ink, S: R.star }); // star scar
-  p.stamp(9, 11, ['KWWK', '.KK.'], { K: R.ink, W: R.cloth }); // sleepy eyes
-  p.stamp(17, 11, ['KWWK', '.KK.'], { K: R.ink, W: R.cloth });
-  p.dots(R.ink, [12, 9], [17, 9]); // serious little brows
+  p.stamp(10, 10, ['WK', 'KK', 'KK'], { K: R.ink, W: R.cloth }); // open, shiny eyes
+  p.stamp(18, 10, ['WK', 'KK', 'KK'], { K: R.ink, W: R.cloth });
+  p.dots(R.ink, [12, 8], [17, 8]); // serious little brows
   p.rect(6, 13, 3, 2, R.blush);
   p.rect(21, 13, 3, 2, R.blush);
   p.dots(R.ink, [14, 13], [15, 13], [13, 14], [16, 14], [14, 15], [15, 15]); // nose + open mouth
@@ -140,8 +140,8 @@ export function rakko() {
 
 export function rakkoBlink() {
   const p = new Pixels(30, 30);
-  p.rect(9, 11, 4, 1, R.body).rect(17, 11, 4, 1, R.body);
-  p.rect(9, 12, 4, 1, R.ink).rect(17, 12, 4, 1, R.ink);
+  p.rect(10, 10, 2, 2, R.body).rect(18, 10, 2, 2, R.body);
+  p.rect(10, 12, 2, 1, R.ink).rect(18, 12, 2, 1, R.ink);
   return p;
 }
 
