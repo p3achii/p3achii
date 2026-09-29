@@ -11,6 +11,7 @@ import {
 
 const PROFILE = {
   name: 'p3achii',
+  statusName: 'tao_p3ach', // name plate on the status card
   taglines: [
     "hi, i'm p3achii ~",
     'i draw & make games',
@@ -207,7 +208,7 @@ function status() {
 <g clip-path="url(#avatarClip)"><g>${drift(74, 6)}<path d="${wave(214, 4, 74, { width: 222, bottom: 360 })}" transform="translate(34 0)" fill="${T.mist}"/></g></g>
 <ellipse class="shadow" cx="145" cy="221" rx="48" ry="7" fill="${P.blue}" opacity=".45"/>
 <g transform="translate(79 78)"><g class="hover">${peach().svg(0, 0, 6)}<g class="blink">${peachBlink().svg(0, 0, 6)}</g></g></g>
-${pixelLabel(PROFILE.name, { x: 145, y: 250, size: 4, fill: P.dark, bold: true, anchor: 'middle' }).svg}
+${pixelLabel(PROFILE.statusName, { x: 145, y: 252, size: 3, fill: P.dark, bold: true, anchor: 'middle' }).svg}
 <line x1="58" y1="300" x2="232" y2="300" stroke="${T.sandDeep}" stroke-width="2" stroke-dasharray="4 5"/>
 ${iconCake().svg(84, 312, 3)}
 ${pixelLabel(PROFILE.birthday, { x: 128, y: 322, size: 2, fill: P.brown }).svg}
