@@ -304,7 +304,7 @@ const art = (file) => `data:image/webp;base64,${readFileSync(new URL(file, ART))
 function sketchbook() {
   const W = 900;
   const H = 410;
-  const { featured, sticker, creatures } = PROFILE.art;
+  const { featured, stickers, creatures } = PROFILE.art;
 
   // the glowing fruit in the forest piece (fractions of the image), pulsing softly
   const img = { x: 50, y: 80, w: 480, h: 270 };
@@ -313,6 +313,17 @@ function sketchbook() {
     const [x, y] = [round(img.x + fx * img.w), round(img.y + fy * img.h)];
     return `<circle class="glow" style="animation-delay:${round(-i * 0.7)}s" cx="${x}" cy="${y}" r="30" fill="url(#glow${i})"/>
 <g class="twinkle" style="animation-delay:${round(-i * 0.9)}s">${sparkle(T.foam).svg(x + 16, y - 26, 2)}</g>`;
+  }).join('');
+  // a cursor walking the title screen's PLAY / OPTION / QUIT menu (fractions of the image)
+  const menu = [[0.625, 0.444, 0.645, 0.9], [0.675, 0.595, 0.69, 0.945], [0.628, 0.751, 0.645, 0.91]];
+  const cursor = new Pixels(4, 7).stamp(0, 0, ['#...', '##..', '###.', '####', '###.', '##..', '#...'], { '#': T.foam });
+  const menuFx = menu.map(([ax, fy, x0, x1], i) => {
+    const y = img.y + fy * img.h;
+    const vis = menu.map((_, j) => (j === i ? 1 : 0));
+    return `<g opacity="${i === 0 ? 1 : 0}">${cycle('opacity', vis, menu.length * 1.8)}
+  <rect x="${round(img.x + x0 * img.w)}" y="${round(y - 9)}" width="${round((x1 - x0) * img.w)}" height="18" rx="9" fill="#FFFFFF" opacity=".14"/>
+  <g class="blinky">${cursor.svg(round(img.x + ax * img.w - 8), round(y - 7), 2)}</g>
+</g>`;
   }).join('');
   const glowDefs = orbs.map(([, , c], i) =>
     `<radialGradient id="glow${i}"><stop offset="0" stop-color="${c}" stop-opacity=".75"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join('');
@@ -323,16 +334,22 @@ function sketchbook() {
   <image href="${art(featured)}" x="${img.x}" y="${img.y}" width="${img.w}" height="${img.h}" clip-path="url(#featClip)" preserveAspectRatio="xMidYMid slice"/>
   <rect x="${img.x}" y="${img.y}" width="${img.w}" height="${img.h}" rx="3" fill="none" stroke="${P.dark}" stroke-width="1.5" opacity=".5"/>
   ${glows}
+  ${menuFx}
   <rect x="62" y="56" width="74" height="24" fill="${T.peach}" opacity=".8" transform="rotate(-9 99 68)"/>
   <rect x="446" y="58" width="74" height="24" fill="${T.mist}" opacity=".85" transform="rotate(8 483 70)"/>
 </g></g>`;
 
+  const [calm, shock] = stickers.react;
   const stickerArt = `
-<g transform="rotate(7 682 136)"><g class="wiggle">
-  <image href="${art(sticker)}" x="590" y="46" width="184" height="184" filter="url(#lift)"/>
+<g transform="rotate(-6 636 130)"><g class="react">
+  <image href="${art(calm)}" x="552" y="46" width="168" height="168" filter="url(#lift)"/>
+  <image class="shock" href="${art(shock)}" x="552" y="46" width="168" height="168" filter="url(#lift)"/>
 </g></g>
-<g class="float">${sparkle(T.peachShade).svg(792, 84, 3)}</g>
-<g class="float" style="animation-delay:-1.4s">${sparkle(P.blue).svg(580, 170, 2)}</g>`;
+<g transform="rotate(7 792 124)"><g class="wiggle">
+  <image href="${art(stickers.plain)}" x="710" y="40" width="164" height="164" filter="url(#lift)"/>
+</g></g>
+<g class="float">${sparkle(T.peachShade).svg(700, 44, 3)}</g>
+<g class="float" style="animation-delay:-1.4s">${sparkle(P.blue).svg(566, 196, 2)}</g>`;
 
   const polaroid = (file, x, y, angle, i) => `
 <g transform="rotate(${angle} ${x + 68} ${y + 79})"><g class="idle" style="animation-delay:${round(-i * 0.9)}s">
@@ -351,6 +368,12 @@ function sketchbook() {
 @keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4); } 50% { opacity: 1; transform: scale(1); } }
 .wiggle { animation: wiggle 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
 @keyframes wiggle { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-5deg); } 80% { transform: rotate(4deg); } 90% { transform: rotate(-2deg); } }
+.react { animation: react 4.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 80%; }
+@keyframes react { 0%, 64%, 84%, 100% { transform: scale(1); } 68% { transform: scale(1.1) rotate(-3deg); } 74% { transform: scale(1.06) rotate(2deg); } }
+.shock { opacity: 0; animation: shock 4.4s steps(1) infinite; }
+@keyframes shock { 66% { opacity: 1; } 84% { opacity: 0; } }
+.blinky { animation: blinky .9s steps(1) infinite; }
+@keyframes blinky { 50% { opacity: .3; } }
 .float { animation: float 3s ease-in-out infinite; }
 @keyframes float { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-8px); opacity: 1; } }
 .idle { animation: idle 3.6s ease-in-out infinite; }
@@ -370,7 +393,7 @@ ${polaroid(creatures[1], 724, 232, 5, 1)}`;
 
   return doc(W, H, {
     title: `${PROFILE.statusName} — sketchbook`,
-    desc: 'My drawings: a hooded character in a dark forest with glowing fruit floating around them, a chibi sticker of a character with dark blue hair and yellow flowers, and two mushroom creature designs (a red-capped one and a brown-capped one).',
+    desc: 'My drawings: the title screen of Wandspell Chronicles (a hooded character in a dark forest with glowing fruit, and a PLAY / OPTION / QUIT menu with a cursor moving through it), a chibi sticker of a character with glasses who keeps making a surprised face, a chibi sticker with dark blue hair and yellow flowers, and two mushroom creature designs (a red-capped one and a brown-capped one).',
     style, defs, body,
   });
 }
@@ -379,12 +402,12 @@ ${polaroid(creatures[1], 724, 232, 5, 1)}`;
 
 function characters() {
   const W = 900;
-  const H = 360;
+  const H = 384;
   const list = PROFILE.art.characters;
   const size = 188;
   const gap = 24;
   const x0 = (W - (list.length * size + (list.length - 1) * gap)) / 2;
-  const y0 = 80;
+  const y0 = 102;
   const px = (i) => x0 + i * (size + gap);
   const dur = list.length * 2.2;
 
@@ -415,15 +438,15 @@ function characters() {
 @keyframes start { 50% { opacity: .15; } }`;
 
   const body = `
-${panel(10, 22, 872, 322)}
+${panel(10, 22, 872, 346)}
 ${tab(30, 4, 'CHARACTER SELECT')}
 ${portraits}
 ${selector}
-${pixelLabel('PRESS START', { x: W / 2, y: 304, size: 3, fill: P.teal, anchor: 'middle', attrs: 'class="start"' }).svg}`;
+${pixelLabel('PRESS START', { x: W / 2, y: 328, size: 3, fill: P.teal, anchor: 'middle', attrs: 'class="start"' }).svg}`;
 
   return doc(W, H, {
     title: `${PROFILE.statusName} — character select`,
-    desc: 'Four elf characters I drew, shown as a game character-select screen with a cursor cycling between them: green hair with a little mushroom and a blue vest, a dark navy hood, purple hair with brown overalls, and red hair with a green top.',
+    desc: 'Four elf characters I drew on blue backgrounds, shown as a game character-select screen with a cursor cycling between them: green hair with a little mushroom and a blue vest, a dark navy hood, purple hair with brown overalls, and red hair with a green top.',
     style, defs: `${DOTS}${clips}`, body,
   });
 }
@@ -434,34 +457,37 @@ ${pixelLabel('PRESS START', { x: W / 2, y: 304, size: 3, fill: P.teal, anchor: '
 const LINK_ICONS = {
   x: { bg: P.dark, rows: ['##......##', '.##....##.', '..##..##..', '...####...', '....##....', '...####...', '..##..##..', '.##....##.', '##......##'] },
   instagram: { bg: T.peachShade, rows: ['.#########.', '#.........#', '#.......#.#', '#...###...#', '#..#...#..#', '#..#...#..#', '#..#...#..#', '#...###...#', '#.........#', '#.........#', '.#########.'] },
+  itch: { bg: P.teal, rows: ['.##########.', '############', '#..##..##..#', '############', '.##########.', '.###.##.###.', '.##..##..##.', '.##########.', '.####..####.'] },
   discord: { bg: P.blue, rows: ['..##....##..', '.##########.', '############', '###..##..###', '###..##..###', '############', '############', '.###....###.', '..#......#..'] },
 };
 
+// Compact enough that four sit in one row.
 function linkButton({ icon, label, handle, url }) {
-  const W = 300;
-  const H = 84;
+  const W = 224;
+  const H = 80;
   const ic = LINK_ICONS[icon];
   const glyph = new Pixels(ic.rows[0].length, ic.rows.length).stamp(0, 0, ic.rows, { '#': T.foam });
   const s = 3;
-  const gx = 14 + (44 - glyph.w * s) / 2;
-  const gy = 13 + (44 - glyph.h * s) / 2;
-  const arrow = url ? `<g class="nudge">${pixelLabel('>', { x: 262, y: 28, size: 3, fill: P.teal }).svg}</g>` : '';
+  const tile = { x: 13, y: 14, size: 42 };
+  const gx = tile.x + (tile.size - glyph.w * s) / 2;
+  const gy = tile.y + (tile.size - glyph.h * s) / 2;
+  const arrow = url ? `<g class="nudge">${pixelLabel('>', { x: 194, y: 28, size: 2.5, fill: P.teal }).svg}</g>` : '';
   const style = `
 .shine { animation: shine 4s ease-in-out infinite; }
-@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(380px) skewX(-20deg); } }
+@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(300px) skewX(-20deg); } }
 .hop { animation: hop 2.4s ease-in-out infinite; }
 @keyframes hop { 0%, 80%, 100% { transform: translateY(0); } 88% { transform: translateY(-4px); } }
 .nudge { animation: nudge 1s ease-in-out infinite; }
-@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }`;
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }`;
   const body = `
-<clipPath id="btn"><rect x="3" y="3" width="284" height="64" rx="14"/></clipPath>
-<rect x="10" y="10" width="284" height="64" rx="14" fill="${P.brown}"/>
-<rect x="3" y="3" width="284" height="64" rx="14" fill="${P.cream}"/>
-<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="34" height="80" fill="#FFFFFF" opacity=".45"/></g>
-<rect x="3" y="3" width="284" height="64" rx="14" fill="none" stroke="${P.dark}" stroke-width="3"/>
-<g class="hop"><rect x="14" y="13" width="44" height="44" rx="10" fill="${ic.bg}" stroke="${P.dark}" stroke-width="2.5"/>${glyph.svg(round(gx), round(gy), s)}</g>
-${pixelLabel(label, { x: 72, y: 17, size: 2, fill: P.brown }).svg}
-<text class="mono" x="72" y="54" font-size="19" font-weight="700" fill="${P.dark}">${esc(handle)}</text>
+<clipPath id="btn"><rect x="3" y="3" width="210" height="66" rx="14"/></clipPath>
+<rect x="10" y="10" width="210" height="66" rx="14" fill="${P.brown}"/>
+<rect x="3" y="3" width="210" height="66" rx="14" fill="${P.cream}"/>
+<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="30" height="80" fill="#FFFFFF" opacity=".45"/></g>
+<rect x="3" y="3" width="210" height="66" rx="14" fill="none" stroke="${P.dark}" stroke-width="3"/>
+<g class="hop"><rect x="${tile.x}" y="${tile.y}" width="${tile.size}" height="${tile.size}" rx="10" fill="${ic.bg}" stroke="${P.dark}" stroke-width="2.5"/>${glyph.svg(round(gx), round(gy), s)}</g>
+${pixelLabel(label, { x: 66, y: 18, size: 2, fill: P.brown }).svg}
+<text class="mono" x="66" y="54" font-size="16" font-weight="700" fill="${P.dark}">${esc(handle)}</text>
 ${arrow}`;
   return doc(W, H, {
     title: `${label.toLowerCase()} ${handle}`,

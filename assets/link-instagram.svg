@@ -1,26 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="300" height="84" viewBox="0 0 300 84" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="224" height="80" viewBox="0 0 224 80" role="img" aria-labelledby="title desc">
 <title id="title">instagram @sxph_.tcha</title>
 <desc id="desc">Instagram: @sxph_.tcha (https://www.instagram.com/sxph_.tcha/)</desc>
 <style>
 .mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
 
 .shine { animation: shine 4s ease-in-out infinite; }
-@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(380px) skewX(-20deg); } }
+@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(300px) skewX(-20deg); } }
 .hop { animation: hop 2.4s ease-in-out infinite; }
 @keyframes hop { 0%, 80%, 100% { transform: translateY(0); } 88% { transform: translateY(-4px); } }
 .nudge { animation: nudge 1s ease-in-out infinite; }
-@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(3px); } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
 </style>
 <defs></defs>
 
-<clipPath id="btn"><rect x="3" y="3" width="284" height="64" rx="14"/></clipPath>
-<rect x="10" y="10" width="284" height="64" rx="14" fill="#8C5C47"/>
-<rect x="3" y="3" width="284" height="64" rx="14" fill="#F8EDE5"/>
-<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="34" height="80" fill="#FFFFFF" opacity=".45"/></g>
-<rect x="3" y="3" width="284" height="64" rx="14" fill="none" stroke="#4C2C17" stroke-width="3"/>
-<g class="hop"><rect x="14" y="13" width="44" height="44" rx="10" fill="#DC7D68" stroke="#4C2C17" stroke-width="2.5"/><g transform="translate(19.5 18.5) scale(3)" shape-rendering="crispEdges"><path fill="#FFF9F4" d="M1 0h9v1h-9zM0 1h1v1h-1zM10 1h1v1h-1zM0 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM4 3h3v1h-3zM10 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM7 4h1v1h-1zM10 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM7 5h1v1h-1zM10 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM7 6h1v1h-1zM10 6h1v1h-1zM0 7h1v1h-1zM4 7h3v1h-3zM10 7h1v1h-1zM0 8h1v1h-1zM10 8h1v1h-1zM0 9h1v1h-1zM10 9h1v1h-1zM1 10h9v1h-9z"/></g></g>
-<path transform="translate(72 17) scale(2)" shape-rendering="crispEdges" fill="#8C5C47" d="M0 0h3v1h-3zM1 1h1v1h-1zM1 2h1v1h-1zM1 3h1v1h-1zM1 4h1v1h-1zM1 5h1v1h-1zM0 6h3v1h-3zM4 0h1v1h-1zM8 0h1v1h-1zM4 1h1v1h-1zM8 1h1v1h-1zM4 2h2v1h-2zM8 2h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM4 4h1v1h-1zM7 4h2v1h-2zM4 5h1v1h-1zM8 5h1v1h-1zM4 6h1v1h-1zM8 6h1v1h-1zM11 0h4v1h-4zM10 1h1v1h-1zM10 2h1v1h-1zM11 3h3v1h-3zM14 4h1v1h-1zM14 5h1v1h-1zM10 6h4v1h-4zM16 0h5v1h-5zM18 1h1v1h-1zM18 2h1v1h-1zM18 3h1v1h-1zM18 4h1v1h-1zM18 5h1v1h-1zM18 6h1v1h-1zM23 0h3v1h-3zM22 1h1v1h-1zM26 1h1v1h-1zM22 2h1v1h-1zM26 2h1v1h-1zM22 3h5v1h-5zM22 4h1v1h-1zM26 4h1v1h-1zM22 5h1v1h-1zM26 5h1v1h-1zM22 6h1v1h-1zM26 6h1v1h-1zM29 0h3v1h-3zM28 1h1v1h-1zM32 1h1v1h-1zM28 2h1v1h-1zM28 3h1v1h-1zM30 3h3v1h-3zM28 4h1v1h-1zM32 4h1v1h-1zM28 5h1v1h-1zM32 5h1v1h-1zM29 6h4v1h-4zM34 0h4v1h-4zM34 1h1v1h-1zM38 1h1v1h-1zM34 2h1v1h-1zM38 2h1v1h-1zM34 3h4v1h-4zM34 4h1v1h-1zM36 4h1v1h-1zM34 5h1v1h-1zM37 5h1v1h-1zM34 6h1v1h-1zM38 6h1v1h-1zM41 0h3v1h-3zM40 1h1v1h-1zM44 1h1v1h-1zM40 2h1v1h-1zM44 2h1v1h-1zM40 3h5v1h-5zM40 4h1v1h-1zM44 4h1v1h-1zM40 5h1v1h-1zM44 5h1v1h-1zM40 6h1v1h-1zM44 6h1v1h-1zM46 0h1v1h-1zM50 0h1v1h-1zM46 1h2v1h-2zM49 1h2v1h-2zM46 2h1v1h-1zM48 2h1v1h-1zM50 2h1v1h-1zM46 3h1v1h-1zM48 3h1v1h-1zM50 3h1v1h-1zM46 4h1v1h-1zM50 4h1v1h-1zM46 5h1v1h-1zM50 5h1v1h-1zM46 6h1v1h-1zM50 6h1v1h-1z"/>
-<text class="mono" x="72" y="54" font-size="19" font-weight="700" fill="#4C2C17">@sxph_.tcha</text>
-<g class="nudge"><path transform="translate(262 28) scale(3)" shape-rendering="crispEdges" fill="#016180" d="M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM1 5h1v1h-1zM0 6h1v1h-1z"/></g>
+<clipPath id="btn"><rect x="3" y="3" width="210" height="66" rx="14"/></clipPath>
+<rect x="10" y="10" width="210" height="66" rx="14" fill="#8C5C47"/>
+<rect x="3" y="3" width="210" height="66" rx="14" fill="#F8EDE5"/>
+<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="30" height="80" fill="#FFFFFF" opacity=".45"/></g>
+<rect x="3" y="3" width="210" height="66" rx="14" fill="none" stroke="#4C2C17" stroke-width="3"/>
+<g class="hop"><rect x="13" y="14" width="42" height="42" rx="10" fill="#DC7D68" stroke="#4C2C17" stroke-width="2.5"/><g transform="translate(17.5 18.5) scale(3)" shape-rendering="crispEdges"><path fill="#FFF9F4" d="M1 0h9v1h-9zM0 1h1v1h-1zM10 1h1v1h-1zM0 2h1v1h-1zM8 2h1v1h-1zM10 2h1v1h-1zM0 3h1v1h-1zM4 3h3v1h-3zM10 3h1v1h-1zM0 4h1v1h-1zM3 4h1v1h-1zM7 4h1v1h-1zM10 4h1v1h-1zM0 5h1v1h-1zM3 5h1v1h-1zM7 5h1v1h-1zM10 5h1v1h-1zM0 6h1v1h-1zM3 6h1v1h-1zM7 6h1v1h-1zM10 6h1v1h-1zM0 7h1v1h-1zM4 7h3v1h-3zM10 7h1v1h-1zM0 8h1v1h-1zM10 8h1v1h-1zM0 9h1v1h-1zM10 9h1v1h-1zM1 10h9v1h-9z"/></g></g>
+<path transform="translate(66 18) scale(2)" shape-rendering="crispEdges" fill="#8C5C47" d="M0 0h3v1h-3zM1 1h1v1h-1zM1 2h1v1h-1zM1 3h1v1h-1zM1 4h1v1h-1zM1 5h1v1h-1zM0 6h3v1h-3zM4 0h1v1h-1zM8 0h1v1h-1zM4 1h1v1h-1zM8 1h1v1h-1zM4 2h2v1h-2zM8 2h1v1h-1zM4 3h1v1h-1zM6 3h1v1h-1zM8 3h1v1h-1zM4 4h1v1h-1zM7 4h2v1h-2zM4 5h1v1h-1zM8 5h1v1h-1zM4 6h1v1h-1zM8 6h1v1h-1zM11 0h4v1h-4zM10 1h1v1h-1zM10 2h1v1h-1zM11 3h3v1h-3zM14 4h1v1h-1zM14 5h1v1h-1zM10 6h4v1h-4zM16 0h5v1h-5zM18 1h1v1h-1zM18 2h1v1h-1zM18 3h1v1h-1zM18 4h1v1h-1zM18 5h1v1h-1zM18 6h1v1h-1zM23 0h3v1h-3zM22 1h1v1h-1zM26 1h1v1h-1zM22 2h1v1h-1zM26 2h1v1h-1zM22 3h5v1h-5zM22 4h1v1h-1zM26 4h1v1h-1zM22 5h1v1h-1zM26 5h1v1h-1zM22 6h1v1h-1zM26 6h1v1h-1zM29 0h3v1h-3zM28 1h1v1h-1zM32 1h1v1h-1zM28 2h1v1h-1zM28 3h1v1h-1zM30 3h3v1h-3zM28 4h1v1h-1zM32 4h1v1h-1zM28 5h1v1h-1zM32 5h1v1h-1zM29 6h4v1h-4zM34 0h4v1h-4zM34 1h1v1h-1zM38 1h1v1h-1zM34 2h1v1h-1zM38 2h1v1h-1zM34 3h4v1h-4zM34 4h1v1h-1zM36 4h1v1h-1zM34 5h1v1h-1zM37 5h1v1h-1zM34 6h1v1h-1zM38 6h1v1h-1zM41 0h3v1h-3zM40 1h1v1h-1zM44 1h1v1h-1zM40 2h1v1h-1zM44 2h1v1h-1zM40 3h5v1h-5zM40 4h1v1h-1zM44 4h1v1h-1zM40 5h1v1h-1zM44 5h1v1h-1zM40 6h1v1h-1zM44 6h1v1h-1zM46 0h1v1h-1zM50 0h1v1h-1zM46 1h2v1h-2zM49 1h2v1h-2zM46 2h1v1h-1zM48 2h1v1h-1zM50 2h1v1h-1zM46 3h1v1h-1zM48 3h1v1h-1zM50 3h1v1h-1zM46 4h1v1h-1zM50 4h1v1h-1zM46 5h1v1h-1zM50 5h1v1h-1zM46 6h1v1h-1zM50 6h1v1h-1z"/>
+<text class="mono" x="66" y="54" font-size="16" font-weight="700" fill="#4C2C17">@sxph_.tcha</text>
+<g class="nudge"><path transform="translate(194 28) scale(2.5)" shape-rendering="crispEdges" fill="#016180" d="M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM1 5h1v1h-1zM0 6h1v1h-1z"/></g>
 </svg>

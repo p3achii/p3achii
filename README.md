@@ -10,11 +10,11 @@
 
 <img src="https://raw.githubusercontent.com/p3achii/p3achii/output/header.svg" alt="p3achii — drawing and game dev. Wooper bobs in the waves in front of the sun while the scenery changes with the seasons, and a typewriter cycles: hi, i'm p3achii / i draw and make games / unity (mostly 3d), c / c# / currently: live2d rigging / drawing for game dev" width="100%">
 
-<a href="https://x.com/tao_p3ach"><img src="assets/link-x.svg" alt="X — @tao_p3ach" width="32%"></a> <a href="https://www.instagram.com/sxph_.tcha/"><img src="assets/link-instagram.svg" alt="Instagram — @sxph_.tcha" width="32%"></a> <img src="assets/link-discord.svg" alt="Discord — tao_zi." width="32%">
+<a href="https://x.com/tao_p3ach"><img src="assets/link-x.svg" alt="X — @tao_p3ach" width="24%"></a> <a href="https://www.instagram.com/sxph_.tcha/"><img src="assets/link-instagram.svg" alt="Instagram — @sxph_.tcha" width="24%"></a> <a href="https://p3ach-ii.itch.io/"><img src="assets/link-itch.svg" alt="itch.io — p3ach-ii" width="24%"></a> <img src="assets/link-discord.svg" alt="Discord — tao_zi." width="24%">
 
 <img src="assets/status.svg" alt="Status — class: artist and game developer · engine: Unity, mostly 3D · main: C / C# · quest: Live2D rigging and drawing for game dev · birthday: 3 June · inventory: drawing, Unity 3D, C#, C, Live2D" width="100%">
 
-<img src="assets/sketchbook.svg" alt="Sketchbook — my drawings: a hooded character in a dark forest with glowing fruit, a chibi sticker, and two mushroom creature designs" width="100%">
+<img src="assets/sketchbook.svg" alt="Sketchbook — my drawings: the Wandspell Chronicles title screen, two chibi stickers, and two mushroom creature designs" width="100%">
 
 <img src="assets/characters.svg" alt="Character select — four elf characters I drew, with a cursor cycling between them" width="100%">
 

@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="224" height="80" viewBox="0 0 224 80" role="img" aria-labelledby="title desc">
-<title id="title">x @tao_p3ach</title>
-<desc id="desc">X: @tao_p3ach (https://x.com/tao_p3ach)</desc>
+<title id="title">itch.io p3ach-ii</title>
+<desc id="desc">Itch.io: p3ach-ii (https://p3ach-ii.itch.io/)</desc>
 <style>
 .mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
 
@@ -19,8 +19,8 @@
 <rect x="3" y="3" width="210" height="66" rx="14" fill="#F8EDE5"/>
 <g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="30" height="80" fill="#FFFFFF" opacity=".45"/></g>
 <rect x="3" y="3" width="210" height="66" rx="14" fill="none" stroke="#4C2C17" stroke-width="3"/>
-<g class="hop"><rect x="13" y="14" width="42" height="42" rx="10" fill="#4C2C17" stroke="#4C2C17" stroke-width="2.5"/><g transform="translate(19 21.5) scale(3)" shape-rendering="crispEdges"><path fill="#FFF9F4" d="M0 0h2v1h-2zM8 0h2v1h-2zM1 1h2v1h-2zM7 1h2v1h-2zM2 2h2v1h-2zM6 2h2v1h-2zM3 3h4v1h-4zM4 4h2v1h-2zM3 5h4v1h-4zM2 6h2v1h-2zM6 6h2v1h-2zM1 7h2v1h-2zM7 7h2v1h-2zM0 8h2v1h-2zM8 8h2v1h-2z"/></g></g>
-<path transform="translate(66 18) scale(2)" shape-rendering="crispEdges" fill="#8C5C47" d="M0 0h1v1h-1zM4 0h1v1h-1zM0 1h1v1h-1zM4 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM2 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM0 5h1v1h-1zM4 5h1v1h-1zM0 6h1v1h-1zM4 6h1v1h-1z"/>
-<text class="mono" x="66" y="54" font-size="16" font-weight="700" fill="#4C2C17">@tao_p3ach</text>
+<g class="hop"><rect x="13" y="14" width="42" height="42" rx="10" fill="#016180" stroke="#4C2C17" stroke-width="2.5"/><g transform="translate(16 21.5) scale(3)" shape-rendering="crispEdges"><path fill="#FFF9F4" d="M1 0h10v1h-10zM0 1h12v1h-12zM0 2h1v1h-1zM3 2h2v1h-2zM7 2h2v1h-2zM11 2h1v1h-1zM0 3h12v1h-12zM1 4h10v1h-10zM1 5h3v1h-3zM5 5h2v1h-2zM8 5h3v1h-3zM1 6h2v1h-2zM5 6h2v1h-2zM9 6h2v1h-2zM1 7h10v1h-10zM1 8h4v1h-4zM7 8h4v1h-4z"/></g></g>
+<path transform="translate(66 18) scale(2)" shape-rendering="crispEdges" fill="#8C5C47" d="M0 0h3v1h-3zM1 1h1v1h-1zM1 2h1v1h-1zM1 3h1v1h-1zM1 4h1v1h-1zM1 5h1v1h-1zM0 6h3v1h-3zM4 0h5v1h-5zM6 1h1v1h-1zM6 2h1v1h-1zM6 3h1v1h-1zM6 4h1v1h-1zM6 5h1v1h-1zM6 6h1v1h-1zM11 0h3v1h-3zM10 1h1v1h-1zM14 1h1v1h-1zM10 2h1v1h-1zM10 3h1v1h-1zM10 4h1v1h-1zM10 5h1v1h-1zM14 5h1v1h-1zM11 6h3v1h-3zM16 0h1v1h-1zM20 0h1v1h-1zM16 1h1v1h-1zM20 1h1v1h-1zM16 2h1v1h-1zM20 2h1v1h-1zM16 3h5v1h-5zM16 4h1v1h-1zM20 4h1v1h-1zM16 5h1v1h-1zM20 5h1v1h-1zM16 6h1v1h-1zM20 6h1v1h-1zM22 6h1v1h-1zM24 0h3v1h-3zM25 1h1v1h-1zM25 2h1v1h-1zM25 3h1v1h-1zM25 4h1v1h-1zM25 5h1v1h-1zM24 6h3v1h-3zM29 0h3v1h-3zM28 1h1v1h-1zM32 1h1v1h-1zM28 2h1v1h-1zM32 2h1v1h-1zM28 3h1v1h-1zM32 3h1v1h-1zM28 4h1v1h-1zM32 4h1v1h-1zM28 5h1v1h-1zM32 5h1v1h-1zM29 6h3v1h-3z"/>
+<text class="mono" x="66" y="54" font-size="16" font-weight="700" fill="#4C2C17">p3ach-ii</text>
 <g class="nudge"><path transform="translate(194 28) scale(2.5)" shape-rendering="crispEdges" fill="#016180" d="M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM1 5h1v1h-1zM0 6h1v1h-1z"/></g>
 </svg>

@@ -35,12 +35,14 @@ export const PROFILE = {
   links: [
     { file: 'link-x.svg', icon: 'x', label: 'X', handle: '@tao_p3ach', url: 'https://x.com/tao_p3ach' },
     { file: 'link-instagram.svg', icon: 'instagram', label: 'INSTAGRAM', handle: '@sxph_.tcha', url: 'https://www.instagram.com/sxph_.tcha/' },
+    { file: 'link-itch.svg', icon: 'itch', label: 'ITCH.IO', handle: 'p3ach-ii', url: 'https://p3ach-ii.itch.io/' },
     { file: 'link-discord.svg', icon: 'discord', label: 'DISCORD', handle: 'tao_zi.' },
   ],
   // artwork lives in assets/art/ (web-sized copies)
   art: {
-    featured: 'forest.webp',
-    sticker: 'sticker.webp',
+    featured: 'wandspell.webp', // Wandspell Chronicles title screen
+    // the glasses sticker swaps to its surprised face every few seconds
+    stickers: { react: ['sticker-glasses.webp', 'sticker-glasses-shock.webp'], plain: 'sticker-flowers.webp' },
     creatures: ['mushroom-red.webp', 'mushroom-brown.webp'],
     characters: ['elf-1.webp', 'elf-2.webp', 'elf-3.webp', 'elf-4.webp'],
   },
