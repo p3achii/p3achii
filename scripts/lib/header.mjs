@@ -74,8 +74,9 @@ function gulls() {
 }
 
 // ---------------------------------------------------------------------------
-// Typewriter effect that works with any monospace fallback: every line is forced to an exact
-// width with textLength, then revealed one character cell at a time by an animated clip rect.
+// Typewriter effect. Every character is its own <text>, centred in a fixed-width cell and
+// switched on/off with a discrete SMIL opacity animation — no clip paths, which iOS Safari
+// doesn't animate inside SVG images (it showed every line at once).
 function typewriter(lines, { x, y, size, color, cursor }) {
   const cw = size * 0.6;
   const typeDt = 0.075;
@@ -84,27 +85,29 @@ function typewriter(lines, { x, y, size, color, cursor }) {
   const gap = 0.45;
   let t = 0;
   const segs = lines.map((line) => {
-    const n = [...line].length;
-    const seg = { line, n, start: t };
-    t += n * typeDt + hold + n * eraseDt + gap;
+    const chars = [...line];
+    const seg = { chars, n: chars.length, start: t };
+    t += seg.n * typeDt + hold + seg.n * eraseDt + gap;
     return seg;
   });
-  const dur = t;
-  const kt = (sec) => (sec / dur).toFixed(5);
+  const dur = round(t);
+  const kt = (sec) => (sec / t).toFixed(5);
   const cursorEvents = [[0, 0]];
-  let defs = '';
-  let body = '';
-  segs.forEach((s, i) => {
-    const events = [[0, 0]];
-    for (let k = 1; k <= s.n; k++) events.push([s.start + k * typeDt, k * cw]);
+  let glyphs = '';
+  for (const s of segs) {
     const eraseAt = s.start + s.n * typeDt + hold;
-    for (let k = 1; k <= s.n; k++) events.push([eraseAt + k * eraseDt, (s.n - k) * cw]);
-    cursorEvents.push(...events.slice(1));
-    defs += `<clipPath id="type${i}"><rect x="${x}" y="${y - size}" width="0" height="${size * 1.6}"><animate attributeName="width" values="${events.map((e) => round(e[1])).join(';')}" keyTimes="${events.map((e) => kt(e[0])).join(';')}" dur="${round(dur)}s" calcMode="discrete" repeatCount="indefinite"/></rect></clipPath>`;
-    body += `<text class="mono" x="${x}" y="${y}" font-size="${size}" fill="${color}" textLength="${round(s.n * cw)}" lengthAdjust="spacingAndGlyphs" xml:space="preserve" clip-path="url(#type${i})">${esc(s.line)}</text>`;
-  });
-  body += `<rect class="caret" x="${x}" y="${y - size * 0.82}" width="${round(cw * 0.8)}" height="${size}" fill="${cursor}"><animate attributeName="x" values="${cursorEvents.map((e) => round(x + e[1] + 2)).join(';')}" keyTimes="${cursorEvents.map((e) => kt(e[0])).join(';')}" dur="${round(dur)}s" calcMode="discrete" repeatCount="indefinite"/></rect>`;
-  return { defs, body };
+    for (let k = 1; k <= s.n; k++) cursorEvents.push([s.start + k * typeDt, k]);
+    for (let k = 1; k <= s.n; k++) cursorEvents.push([eraseAt + k * eraseDt, s.n - k]);
+    s.chars.forEach((ch, k) => {
+      if (ch === ' ') return;
+      const on = s.start + (k + 1) * typeDt;
+      const off = eraseAt + (s.n - k) * eraseDt; // erased from the end of the line
+      glyphs += `<text x="${round(x + (k + 0.5) * cw)}" y="${y}" opacity="0"><animate attributeName="opacity" values="0;1;0" keyTimes="0;${kt(on)};${kt(off)}" dur="${dur}s" calcMode="discrete" repeatCount="indefinite"/>${esc(ch)}</text>`;
+    });
+  }
+  const body = `<g class="mono" font-size="${size}" fill="${color}" text-anchor="middle">${glyphs}</g>
+<g>${`<animateTransform attributeName="transform" type="translate" values="${cursorEvents.map((e) => `${round(e[1] * cw)} 0`).join(';')}" keyTimes="${cursorEvents.map((e) => kt(e[0])).join(';')}" dur="${dur}s" calcMode="discrete" repeatCount="indefinite"/>`}<rect class="caret" x="${x + 2}" y="${round(y - size * 0.82)}" width="${round(cw * 0.8)}" height="${size}" fill="${cursor}"/></g>`;
+  return { defs: '', body };
 }
 
 // ---------------------------------------------------------------------------
