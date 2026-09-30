@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="300" height="84" viewBox="0 0 300 84" role="img" aria-labelledby="title desc">
+<title id="title">x @tao_p3ach</title>
+<desc id="desc">X: @tao_p3ach (https://x.com/tao_p3ach)</desc>
+<style>
+.mono { font-family: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', Menlo, Consolas, 'Liberation Mono', monospace; }
+
+.shine { animation: shine 4s ease-in-out infinite; }
+@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(380px) skewX(-20deg); } }
+.hop { animation: hop 2.4s ease-in-out infinite; }
+@keyframes hop { 0%, 80%, 100% { transform: translateY(0); } 88% { transform: translateY(-4px); } }
+.nudge { animation: nudge 1s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+</style>
+<defs></defs>
+
+<clipPath id="btn"><rect x="3" y="3" width="284" height="64" rx="14"/></clipPath>
+<rect x="10" y="10" width="284" height="64" rx="14" fill="#8C5C47"/>
+<rect x="3" y="3" width="284" height="64" rx="14" fill="#F8EDE5"/>
+<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="34" height="80" fill="#FFFFFF" opacity=".45"/></g>
+<rect x="3" y="3" width="284" height="64" rx="14" fill="none" stroke="#4C2C17" stroke-width="3"/>
+<g class="hop"><rect x="14" y="13" width="44" height="44" rx="10" fill="#4C2C17" stroke="#4C2C17" stroke-width="2.5"/><g transform="translate(21 21.5) scale(3)" shape-rendering="crispEdges"><path fill="#FFF9F4" d="M0 0h2v1h-2zM8 0h2v1h-2zM1 1h2v1h-2zM7 1h2v1h-2zM2 2h2v1h-2zM6 2h2v1h-2zM3 3h4v1h-4zM4 4h2v1h-2zM3 5h4v1h-4zM2 6h2v1h-2zM6 6h2v1h-2zM1 7h2v1h-2zM7 7h2v1h-2zM0 8h2v1h-2zM8 8h2v1h-2z"/></g></g>
+<path transform="translate(72 17) scale(2)" shape-rendering="crispEdges" fill="#8C5C47" d="M0 0h1v1h-1zM4 0h1v1h-1zM0 1h1v1h-1zM4 1h1v1h-1zM1 2h1v1h-1zM3 2h1v1h-1zM2 3h1v1h-1zM1 4h1v1h-1zM3 4h1v1h-1zM0 5h1v1h-1zM4 5h1v1h-1zM0 6h1v1h-1zM4 6h1v1h-1z"/>
+<text class="mono" x="72" y="54" font-size="19" font-weight="700" fill="#4C2C17">@tao_p3ach</text>
+<g class="nudge"><path transform="translate(262 28) scale(3)" shape-rendering="crispEdges" fill="#016180" d="M0 0h1v1h-1zM1 1h1v1h-1zM2 2h1v1h-1zM3 3h1v1h-1zM2 4h1v1h-1zM1 5h1v1h-1zM0 6h1v1h-1z"/></g>
+</svg>

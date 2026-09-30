@@ -1,7 +1,8 @@
 // Builds the static animated SVG cards in assets/.
-// Edit PROFILE below, then run:  node scripts/build-assets.mjs
-import { mkdirSync, writeFileSync } from 'node:fs';
-import { Pixels, pixelLabel, pixelText, round } from './lib/pixel.mjs';
+// Edit scripts/profile.mjs, then run:  node scripts/build-assets.mjs
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
+import { Pixels, pixelLabel, round } from './lib/pixel.mjs';
+import { PROFILE } from './profile.mjs';
 import { DOTS, cloud, cycle, doc, drift, esc, heart, panel, sparkle, tab, wave } from './lib/svg.mjs';
 import {
   P, T,
@@ -9,178 +10,7 @@ import {
   peach, peachBlink, rakko, rakkoBlink, tinyPeach, wooper, wooperBlink,
 } from './lib/theme.mjs';
 
-const PROFILE = {
-  name: 'p3achii',
-  statusName: 'tao_p3ach', // name plate on the status card
-  taglines: [
-    "hi, i'm p3achii ~",
-    'i draw & make games',
-    'unity (mostly 3d) · c / c#',
-    'currently: live2d rigging',
-    'drawing for game dev ✦',
-  ],
-  status: [
-    ['CLASS', 'artist ✦ game developer'],
-    ['ENGINE', 'unity · mostly 3d'],
-    ['MAIN', 'c / c#'],
-    ['QUEST', 'live2d rigging & drawing for game dev'],
-  ],
-  birthday: '3 JUNE',
-  inventory: [
-    ['palette', 'drawing'],
-    ['cube', 'unity · 3d'],
-    ['C#', 'c#'],
-    ['C', 'c'],
-    ['live2d', 'live2d rigging'],
-  ],
-  party: [
-    { sprite: 'wooper', name: 'WOOPER', tag: 'No.194', about: 'fav pokémon', chips: [['WATER', P.blue], ['GROUND', P.brown]] },
-    { sprite: 'rakko', name: 'RAKKO', tag: '🦦', about: 'fav chiikawa character', chips: [['SEA OTTER', P.teal], ['CHIIKAWA', T.peachShade]] },
-  ],
-  playlist: ['Landokmai', 'dept', 'Tattoo Colour', 'Laufey'],
-};
-
 const OUT = new URL('../assets/', import.meta.url);
-
-// Typewriter effect that works with any monospace fallback: every line is forced to an exact
-// width with textLength, then revealed one character cell at a time by an animated clip rect.
-function typewriter(lines, { x, y, size, color, cursor }) {
-  const cw = size * 0.6;
-  const typeDt = 0.075;
-  const eraseDt = 0.03;
-  const hold = 2;
-  const gap = 0.45;
-  let t = 0;
-  const segs = lines.map((line) => {
-    const n = [...line].length;
-    const seg = { line, n, start: t };
-    t += n * typeDt + hold + n * eraseDt + gap;
-    return seg;
-  });
-  const dur = t;
-  const kt = (sec) => (sec / dur).toFixed(5);
-  const cursorEvents = [[0, 0]];
-  let defs = '';
-  let body = '';
-  segs.forEach((s, i) => {
-    const events = [[0, 0]];
-    for (let k = 1; k <= s.n; k++) events.push([s.start + k * typeDt, k * cw]);
-    const eraseAt = s.start + s.n * typeDt + hold;
-    for (let k = 1; k <= s.n; k++) events.push([eraseAt + k * eraseDt, (s.n - k) * cw]);
-    cursorEvents.push(...events.slice(1));
-    defs += `<clipPath id="type${i}"><rect x="${x}" y="${y - size}" width="0" height="${size * 1.6}"><animate attributeName="width" values="${events.map((e) => round(e[1])).join(';')}" keyTimes="${events.map((e) => kt(e[0])).join(';')}" dur="${round(dur)}s" calcMode="discrete" repeatCount="indefinite"/></rect></clipPath>`;
-    body += `<text class="mono" x="${x}" y="${y}" font-size="${size}" fill="${color}" textLength="${round(s.n * cw)}" lengthAdjust="spacingAndGlyphs" xml:space="preserve" clip-path="url(#type${i})">${esc(s.line)}</text>`;
-  });
-  body += `<rect class="caret" x="${x}" y="${y - size * 0.82}" width="${round(cw * 0.8)}" height="${size}" fill="${cursor}"><animate attributeName="x" values="${cursorEvents.map((e) => round(x + e[1] + 2)).join(';')}" keyTimes="${cursorEvents.map((e) => kt(e[0])).join(';')}" dur="${round(dur)}s" calcMode="discrete" repeatCount="indefinite"/></rect>`;
-  return { defs, body };
-}
-
-// ---------------------------------------------------------------------------
-// header.svg — seaside title screen
-
-function header() {
-  const W = 900;
-  const H = 300;
-  const fx = 2, fy = 2, fw = 888, fh = 288;
-
-  // wobbly pixel title, one hopping group per letter (shadow + face)
-  const size = 10;
-  let lx = 58;
-  const ly = 40;
-  let letters = '';
-  [...PROFILE.name].forEach((ch, i) => {
-    const { d, width } = pixelText(ch, { bold: true });
-    letters += `<g class="hop" style="animation-delay:${round(-i * 0.16)}s"><path transform="translate(${lx + 6} ${ly + 6}) scale(${size})" fill="${T.peach}" d="${d}"/><path transform="translate(${lx} ${ly}) scale(${size})" fill="${P.dark}" d="${d}"/></g>`;
-    lx += (width + 1) * size;
-  });
-
-  const typing = typewriter(PROFILE.taglines, { x: 98, y: 190, size: 22, color: P.dark, cursor: P.teal });
-
-  const sun = new Pixels(28, 28).ellipse(14, 14, 13.6, 13.6, '#F7BDA2').ellipse(14, 14, 10.5, 10.5, '#F9CDB5').ellipse(11.5, 10.5, 4, 3.4, '#FBDDCB');
-  const clouds = [
-    { y: 34, s: 3, dur: 70, delay: -8 },
-    { y: 98, s: 2, dur: 95, delay: -60 },
-    { y: 58, s: 2, dur: 82, delay: -33 },
-  ].map((c) => `<g class="cloud" style="animation-duration:${c.dur}s;animation-delay:${c.delay}s">${cloud().svg(0, c.y, c.s)}</g>`).join('');
-
-  const sparkles = [
-    [532, 44, P.teal, 0], [610, 96, T.peachShade, -0.8], [548, 128, P.blue, -1.6], [840, 40, P.teal, -2.1], [30, 150, P.blue, -1.1],
-  ].map(([x, y, c, d]) => `<g class="twinkle" style="animation-delay:${d}s">${sparkle(c).svg(x, y, 3)}</g>`).join('');
-
-  const glint = (list, fill) => list
-    .map(([x, y, w], i) => `<rect class="glint" style="animation-delay:${round(-i * 0.55)}s" x="${x}" y="${y}" width="${w}" height="3" rx="1.5" fill="${fill}"/>`).join('');
-  const glintsMid = glint([[712, 244, 36], [750, 250, 22], [700, 252, 16], [770, 246, 26]], T.foam);
-  const glintsFront = glint([[726, 274, 30], [764, 282, 18], [704, 286, 14]], T.sky);
-
-  const floater = `<g transform="translate(606 198)">
-  <g class="bob">
-    <ellipse class="ripple" cx="60" cy="60" rx="66" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
-    <ellipse class="ripple" style="animation-delay:-1.4s" cx="60" cy="60" rx="66" ry="7" fill="none" stroke="${T.foam}" stroke-width="2.5"/>
-    ${wooper().svg(0, 0, 4)}
-    <g class="blink">${wooperBlink().svg(0, 0, 4)}</g>
-  </g>
-</g>`;
-
-  const bubbles = [[150, 0], [300, -1.2], [455, -2.5], [812, -0.6], [640, -3.1]]
-    .map(([x, d]) => `<rect class="bubble" style="animation-delay:${d}s" x="${x}" y="286" width="6" height="6" rx="3" fill="none" stroke="${T.foam}" stroke-width="1.6"/>`).join('');
-
-  const style = `
-.hop { animation: hop 2.6s ease-in-out infinite; }
-@keyframes hop { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-7px); } }
-.cloud { animation: cloud linear infinite; }
-@keyframes cloud { from { transform: translateX(${W + 20}px); } to { transform: translateX(-110px); } }
-.twinkle { animation: twinkle 2.4s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes twinkle { 0%, 100% { opacity: .25; transform: scale(.6); } 50% { opacity: 1; transform: scale(1); } }
-.caret { animation: caret 1s steps(1) infinite; }
-@keyframes caret { 50% { opacity: 0; } }
-.bob { animation: bob 3.2s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 80%; }
-@keyframes bob { 0%, 100% { transform: translateY(0) rotate(-2.5deg); } 50% { transform: translateY(6px) rotate(2.5deg); } }
-.blink { opacity: 0; animation: blink 4.5s infinite; }
-@keyframes blink { 0%, 90%, 96%, 100% { opacity: 0; } 91%, 95% { opacity: 1; } }
-.ripple { opacity: 0; animation: ripple 2.8s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes ripple { 0% { opacity: .9; transform: scale(.55); } 100% { opacity: 0; transform: scale(1.25); } }
-.glint { animation: glint 2.2s ease-in-out infinite; }
-@keyframes glint { 0%, 100% { opacity: .15; } 50% { opacity: .9; } }
-.bubble { opacity: 0; animation: bubble 4.2s ease-in infinite; }
-@keyframes bubble { 0% { opacity: 0; transform: translateY(0); } 20% { opacity: .9; } 100% { opacity: 0; transform: translateY(-44px); } }
-.sunring { animation: sunring 4s ease-out infinite; transform-box: fill-box; transform-origin: center; }
-@keyframes sunring { 0% { opacity: .7; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.35); } }`;
-
-  const defs = `
-<clipPath id="frame"><rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="22"/></clipPath>
-<linearGradient id="sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${T.paper}"/><stop offset="1" stop-color="#F6DFCF"/></linearGradient>
-${DOTS}
-${typing.defs}`;
-
-  const body = `
-<rect x="${fx + 7}" y="${fy + 7}" width="${fw}" height="${fh}" rx="22" fill="${P.brown}"/>
-<g clip-path="url(#frame)">
-  <rect width="${W}" height="${H}" fill="url(#sky)"/>
-  <rect width="${W}" height="${H}" fill="url(#dots)"/>
-  <circle class="sunring" cx="768" cy="176" r="74" fill="none" stroke="${T.peach}" stroke-width="3"/>
-  <circle class="sunring" style="animation-delay:-2s" cx="768" cy="176" r="74" fill="none" stroke="${T.peach}" stroke-width="3"/>
-  ${sun.svg(698, 106, 5)}
-  ${clouds}
-  ${sparkles}
-  ${letters}
-  ${tinyPeach().svg(58, 166, 3)}
-  ${typing.body}
-  <g>${drift(120, 9)}<path d="${wave(226, 6, 120)}" fill="${T.mist}"/></g>
-  <g>${drift(160, 12, 1)}<path d="${wave(242, 7, 160)}" fill="${P.blue}"/><path d="${wave(242, 7, 160, { open: true })}" fill="none" stroke="${T.sky}" stroke-width="2.5" opacity=".7"/></g>
-  ${glintsMid}
-  ${floater}
-  <g>${drift(190, 8)}<path d="${wave(264, 8, 190)}" fill="${P.teal}"/><path d="${wave(264, 8, 190, { open: true })}" fill="none" stroke="${T.mist}" stroke-width="3" opacity=".8"/></g>
-  ${glintsFront}
-  ${bubbles}
-</g>
-<rect x="${fx}" y="${fy}" width="${fw}" height="${fh}" rx="22" fill="none" stroke="${P.dark}" stroke-width="3"/>`;
-
-  return doc(W, H, {
-    title: `${PROFILE.name} — drawing & game dev`,
-    desc: `Animated seaside banner: the name ${PROFILE.name} bobbing in pixel letters, Wooper floating in the waves in front of the setting sun, and a typewriter cycling through: ${PROFILE.taglines.join(' / ')}`,
-    style, defs, body,
-  });
-}
 
 // ---------------------------------------------------------------------------
 // status.svg — RPG-style player card
@@ -464,9 +294,194 @@ function footer() {
 }
 
 // ---------------------------------------------------------------------------
+// artwork cards — images are embedded, because SVGs shown as <img> can't load files
+
+const ART = new URL('../assets/art/', import.meta.url);
+const art = (file) => `data:image/webp;base64,${readFileSync(new URL(file, ART)).toString('base64')}`;
+
+// sketchbook.svg — featured illustration taped in, a sticker and two creature polaroids
+
+function sketchbook() {
+  const W = 900;
+  const H = 410;
+  const { featured, sticker, creatures } = PROFILE.art;
+
+  // the glowing fruit in the forest piece (fractions of the image), pulsing softly
+  const img = { x: 50, y: 80, w: 480, h: 270 };
+  const orbs = [[0.28, 0.21, '#FFD36B'], [0.12, 0.33, '#A6F0A4'], [0.08, 0.61, '#FF8C7C']];
+  const glows = orbs.map(([fx, fy, c], i) => {
+    const [x, y] = [round(img.x + fx * img.w), round(img.y + fy * img.h)];
+    return `<circle class="glow" style="animation-delay:${round(-i * 0.7)}s" cx="${x}" cy="${y}" r="30" fill="url(#glow${i})"/>
+<g class="twinkle" style="animation-delay:${round(-i * 0.9)}s">${sparkle(T.foam).svg(x + 16, y - 26, 2)}</g>`;
+  }).join('');
+  const glowDefs = orbs.map(([, , c], i) =>
+    `<radialGradient id="glow${i}"><stop offset="0" stop-color="${c}" stop-opacity=".75"/><stop offset="1" stop-color="${c}" stop-opacity="0"/></radialGradient>`).join('');
+
+  const featuredFrame = `
+<g transform="rotate(-1.2 290 216)"><g class="sway">
+  <rect x="${img.x - 10}" y="${img.y - 10}" width="${img.w + 20}" height="${img.h + 20}" rx="6" fill="#FFFFFF" stroke="${P.dark}" stroke-width="3"/>
+  <image href="${art(featured)}" x="${img.x}" y="${img.y}" width="${img.w}" height="${img.h}" clip-path="url(#featClip)" preserveAspectRatio="xMidYMid slice"/>
+  <rect x="${img.x}" y="${img.y}" width="${img.w}" height="${img.h}" rx="3" fill="none" stroke="${P.dark}" stroke-width="1.5" opacity=".5"/>
+  ${glows}
+  <rect x="62" y="56" width="74" height="24" fill="${T.peach}" opacity=".8" transform="rotate(-9 99 68)"/>
+  <rect x="446" y="58" width="74" height="24" fill="${T.mist}" opacity=".85" transform="rotate(8 483 70)"/>
+</g></g>`;
+
+  const stickerArt = `
+<g transform="rotate(7 682 136)"><g class="wiggle">
+  <image href="${art(sticker)}" x="590" y="46" width="184" height="184" filter="url(#lift)"/>
+</g></g>
+<g class="float">${sparkle(T.peachShade).svg(792, 84, 3)}</g>
+<g class="float" style="animation-delay:-1.4s">${sparkle(P.blue).svg(580, 170, 2)}</g>`;
+
+  const polaroid = (file, x, y, angle, i) => `
+<g transform="rotate(${angle} ${x + 68} ${y + 79})"><g class="idle" style="animation-delay:${round(-i * 0.9)}s">
+  <rect x="${x}" y="${y}" width="136" height="158" rx="4" fill="#FFFFFF" stroke="${P.dark}" stroke-width="2.5"/>
+  <image href="${art(file)}" x="${x + 8}" y="${y + 8}" width="120" height="120"/>
+  ${heart(i ? T.peachShade : P.teal).svg(x + 61, y + 136, 2)}
+  <rect x="${x + 44}" y="${y - 10}" width="48" height="18" fill="${i ? T.mist : T.peach}" opacity=".8" transform="rotate(${-angle * 1.5} ${x + 68} ${y - 1})"/>
+</g></g>`;
+
+  const style = `
+.sway { animation: sway 6s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 0; }
+@keyframes sway { 0%, 100% { transform: rotate(-.5deg); } 50% { transform: rotate(.5deg); } }
+.glow { animation: glow 2.8s ease-in-out infinite; mix-blend-mode: screen; }
+@keyframes glow { 0%, 100% { opacity: .15; } 50% { opacity: .85; } }
+.twinkle { animation: twinkle 2.2s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes twinkle { 0%, 100% { opacity: 0; transform: scale(.4); } 50% { opacity: 1; transform: scale(1); } }
+.wiggle { animation: wiggle 3.4s ease-in-out infinite; transform-box: fill-box; transform-origin: 50% 90%; }
+@keyframes wiggle { 0%, 60%, 100% { transform: rotate(0); } 70% { transform: rotate(-5deg); } 80% { transform: rotate(4deg); } 90% { transform: rotate(-2deg); } }
+.float { animation: float 3s ease-in-out infinite; }
+@keyframes float { 0%, 100% { transform: translateY(0); opacity: .4; } 50% { transform: translateY(-8px); opacity: 1; } }
+.idle { animation: idle 3.6s ease-in-out infinite; }
+@keyframes idle { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }`;
+
+  const defs = `${DOTS}${glowDefs}
+<clipPath id="featClip"><rect x="${img.x}" y="${img.y}" width="${img.w}" height="${img.h}" rx="3"/></clipPath>
+<filter id="lift" x="-10%" y="-10%" width="130%" height="130%"><feDropShadow dx="3" dy="5" stdDeviation="0" flood-color="${P.dark}" flood-opacity=".3"/></filter>`;
+
+  const body = `
+${panel(10, 22, 872, 370)}
+${tab(30, 4, 'SKETCHBOOK')}
+${featuredFrame}
+${stickerArt}
+${polaroid(creatures[0], 572, 226, -4, 0)}
+${polaroid(creatures[1], 724, 232, 5, 1)}`;
+
+  return doc(W, H, {
+    title: `${PROFILE.statusName} — sketchbook`,
+    desc: 'My drawings: a hooded character in a dark forest with glowing fruit floating around them, a chibi sticker of a character with dark blue hair and yellow flowers, and two mushroom creature designs (a red-capped one and a brown-capped one).',
+    style, defs, body,
+  });
+}
+
+// characters.svg — the four elf characters as a game's character select screen
+
+function characters() {
+  const W = 900;
+  const H = 360;
+  const list = PROFILE.art.characters;
+  const size = 188;
+  const gap = 24;
+  const x0 = (W - (list.length * size + (list.length - 1) * gap)) / 2;
+  const y0 = 80;
+  const px = (i) => x0 + i * (size + gap);
+  const dur = list.length * 2.2;
+
+  const portraits = list.map((file, i) => {
+    const lift = list.map((_, j) => (j === i ? '0 -10' : '0 0'));
+    const num = pixelLabel(String(i + 1).padStart(2, '0'), { x: 0, y: 0, size: 2, fill: T.foam });
+    return `<g>${cycle('transform', lift, dur, { type: 'translate' })}
+  <rect x="${px(i)}" y="${y0}" width="${size}" height="${size}" rx="12" fill="#FFFFFF" stroke="${P.dark}" stroke-width="3"/>
+  <image href="${art(file)}" x="${px(i) + 1.5}" y="${y0 + 1.5}" width="${size - 3}" height="${size - 3}" clip-path="url(#pc${i})"/>
+  <g transform="translate(${px(i) + 10} ${y0 + size - 30})"><rect width="${num.width + 16}" height="22" rx="8" fill="${P.teal}" stroke="${P.dark}" stroke-width="2"/><g transform="translate(8 4)">${num.svg}</g></g>
+</g>`;
+  }).join('');
+  const clips = list.map((_, i) => `<clipPath id="pc${i}"><rect x="${px(i) + 1.5}" y="${y0 + 1.5}" width="${size - 3}" height="${size - 3}" rx="10.5"/></clipPath>`).join('');
+
+  const tag = pixelLabel('1P', { x: 0, y: 0, size: 3, fill: T.foam });
+  const selector = `<g>${cycle('transform', list.map((_, i) => `${px(i)} ${y0 - 10}`), dur, { type: 'translate' })}
+  <g class="pulse"><rect x="-7" y="-7" width="${size + 14}" height="${size + 14}" rx="17" fill="none" stroke="${T.peachShade}" stroke-width="5"/></g>
+  <g transform="translate(${size / 2 - 22} -46)"><g class="nudge"><rect width="44" height="30" rx="9" fill="${T.peachShade}" stroke="${P.dark}" stroke-width="2.5"/>
+    <g transform="translate(${22 - tag.width / 2} 5)">${tag.svg}</g><path d="M16 30h12l-6 8z" fill="${T.peachShade}" stroke="${P.dark}" stroke-width="2.5" stroke-linejoin="round"/><rect x="17" y="27" width="10" height="4" fill="${T.peachShade}"/></g></g>
+</g>`;
+
+  const style = `
+.pulse { animation: pulse 1s ease-in-out infinite; transform-box: fill-box; transform-origin: center; }
+@keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.02); } }
+.nudge { animation: nudge .8s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+.start { animation: start 1.2s steps(1) infinite; }
+@keyframes start { 50% { opacity: .15; } }`;
+
+  const body = `
+${panel(10, 22, 872, 322)}
+${tab(30, 4, 'CHARACTER SELECT')}
+${portraits}
+${selector}
+${pixelLabel('PRESS START', { x: W / 2, y: 304, size: 3, fill: P.teal, anchor: 'middle', attrs: 'class="start"' }).svg}`;
+
+  return doc(W, H, {
+    title: `${PROFILE.statusName} — character select`,
+    desc: 'Four elf characters I drew, shown as a game character-select screen with a cursor cycling between them: green hair with a little mushroom and a blue vest, a dark navy hood, purple hair with brown overalls, and red hair with a green top.',
+    style, defs: `${DOTS}${clips}`, body,
+  });
+}
+
+// ---------------------------------------------------------------------------
+// link buttons — one image each so the README can wrap them in links
+
+const LINK_ICONS = {
+  x: { bg: P.dark, rows: ['##......##', '.##....##.', '..##..##..', '...####...', '....##....', '...####...', '..##..##..', '.##....##.', '##......##'] },
+  instagram: { bg: T.peachShade, rows: ['.#########.', '#.........#', '#.......#.#', '#...###...#', '#..#...#..#', '#..#...#..#', '#..#...#..#', '#...###...#', '#.........#', '#.........#', '.#########.'] },
+  discord: { bg: P.blue, rows: ['..##....##..', '.##########.', '############', '###..##..###', '###..##..###', '############', '############', '.###....###.', '..#......#..'] },
+};
+
+function linkButton({ icon, label, handle, url }) {
+  const W = 300;
+  const H = 84;
+  const ic = LINK_ICONS[icon];
+  const glyph = new Pixels(ic.rows[0].length, ic.rows.length).stamp(0, 0, ic.rows, { '#': T.foam });
+  const s = 3;
+  const gx = 14 + (44 - glyph.w * s) / 2;
+  const gy = 13 + (44 - glyph.h * s) / 2;
+  const arrow = url ? `<g class="nudge">${pixelLabel('>', { x: 262, y: 28, size: 3, fill: P.teal }).svg}</g>` : '';
+  const style = `
+.shine { animation: shine 4s ease-in-out infinite; }
+@keyframes shine { 0%, 55% { transform: translateX(-80px) skewX(-20deg); } 85%, 100% { transform: translateX(380px) skewX(-20deg); } }
+.hop { animation: hop 2.4s ease-in-out infinite; }
+@keyframes hop { 0%, 80%, 100% { transform: translateY(0); } 88% { transform: translateY(-4px); } }
+.nudge { animation: nudge 1s ease-in-out infinite; }
+@keyframes nudge { 0%, 100% { transform: translateX(0); } 50% { transform: translateX(4px); } }`;
+  const body = `
+<clipPath id="btn"><rect x="3" y="3" width="284" height="64" rx="14"/></clipPath>
+<rect x="10" y="10" width="284" height="64" rx="14" fill="${P.brown}"/>
+<rect x="3" y="3" width="284" height="64" rx="14" fill="${P.cream}"/>
+<g clip-path="url(#btn)"><rect class="shine" x="0" y="0" width="34" height="80" fill="#FFFFFF" opacity=".45"/></g>
+<rect x="3" y="3" width="284" height="64" rx="14" fill="none" stroke="${P.dark}" stroke-width="3"/>
+<g class="hop"><rect x="14" y="13" width="44" height="44" rx="10" fill="${ic.bg}" stroke="${P.dark}" stroke-width="2.5"/>${glyph.svg(round(gx), round(gy), s)}</g>
+${pixelLabel(label, { x: 72, y: 17, size: 2, fill: P.brown }).svg}
+<text class="mono" x="72" y="54" font-size="19" font-weight="700" fill="${P.dark}">${esc(handle)}</text>
+${arrow}`;
+  return doc(W, H, {
+    title: `${label.toLowerCase()} ${handle}`,
+    desc: `${label[0]}${label.slice(1).toLowerCase()}: ${handle}${url ? ` (${url})` : ''}`,
+    style, body,
+  });
+}
+
+// ---------------------------------------------------------------------------
 
 mkdirSync(OUT, { recursive: true });
-const files = { 'header.svg': header(), 'status.svg': status(), 'party.svg': party(), 'playlist.svg': playlist(), 'footer.svg': footer() };
+const files = {
+  'status.svg': status(),
+  'sketchbook.svg': sketchbook(),
+  'characters.svg': characters(),
+  'party.svg': party(),
+  'playlist.svg': playlist(),
+  'footer.svg': footer(),
+  ...Object.fromEntries(PROFILE.links.map((link) => [link.file, linkButton(link)])),
+};
 for (const [name, svg] of Object.entries(files)) {
   writeFileSync(new URL(name, OUT), svg);
   console.log(`assets/${name}  ${(svg.length / 1024).toFixed(1)} KB`);

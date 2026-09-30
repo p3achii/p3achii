@@ -10,9 +10,9 @@ import { dirname } from 'node:path';
 import { pixelLabel, round } from './lib/pixel.mjs';
 import { DOTS, doc, drift, esc, panel, sparkle, tab, wave } from './lib/svg.mjs';
 import { P, T, iconCake, peach, peachBlink } from './lib/theme.mjs';
+import { todayIn } from './lib/time.mjs';
 
 const BIRTHDAY = { month: 6, day: 3 };
-const TIMEZONE = process.env.TIMEZONE || 'Asia/Bangkok'; // used for "today" and the birthday countdown
 
 const LEVELS = {
   NONE: T.sand,
@@ -73,11 +73,6 @@ const shortDate = (date) =>
 function dateRange(from, to) {
   const [a, b] = [shortDate(from), shortDate(to)];
   return a.split(' ')[0] === b.split(' ')[0] ? `${a}-${b.split(' ')[1]}` : `${a}-${b}`;
-}
-
-function todayIn(timeZone) {
-  // en-CA formats as YYYY-MM-DD
-  return new Intl.DateTimeFormat('en-CA', { timeZone, year: 'numeric', month: '2-digit', day: '2-digit' }).format(new Date());
 }
 
 function daysUntilBirthday(today) {
@@ -282,7 +277,7 @@ ${confetti}`;
 
 const args = parseArgs(process.argv.slice(2));
 const login = args.user || process.env.GITHUB_REPOSITORY_OWNER || 'p3achii';
-const today = args.today || todayIn(TIMEZONE);
+const today = args.today || todayIn();
 const out = args.out || 'dist/contributions.svg';
 
 const calendar = args.data ? loadCalendar(args.data) : await fetchCalendar(login);
