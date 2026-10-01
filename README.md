@@ -4,6 +4,7 @@
   · artwork lives in assets/art/ (web-sized copies)
   · the header (it changes with the seasons) and the tide log are redrawn by
     .github/workflows/contributions.yml and published to the `output` branch
+  · the visitor counter is komarev.com/ghpvc (it counts every time the profile loads)
 -->
 
 <div align="center">
@@ -23,5 +24,7 @@
 <img src="https://raw.githubusercontent.com/p3achii/p3achii/output/contributions.svg" alt="Tide log — my GitHub contributions for the last year, with a peach bobbing along the water while the squares roll like waves" width="100%">
 
 <img src="assets/footer.svg" alt="Thanks for swimming by — see you at sea (Rakko floats past)" width="100%">
+
+<img src="https://komarev.com/ghpvc/?username=p3achii&label=VISITORS&color=016180&style=for-the-badge" alt="Profile visitor count">
 
 </div>
